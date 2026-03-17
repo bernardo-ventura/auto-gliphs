@@ -179,3 +179,8 @@ cython_debug/
 *internal*
 *test.png*
 assets/reward_assets
+
+# Arquivos de teste/output gerados
+output*.svg
+output*.png
+documentation.txt
