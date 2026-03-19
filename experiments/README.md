@@ -38,7 +38,17 @@ python experiments/exp1_model_comparison/exp1_model_comparison.py --image path/t
 
 ---
 
-### Experimento 2: Tipos de Imagens (Em desenvolvimento)
+### Experimento 2: Parâmetros (Em desenvolvimento)
+**Objetivo:** Entender o impacto dos parâmetros de geração
+
+**Parâmetros testados:**
+- `temperature` (0.5, 1.0, 1.5, 2.0)
+- `max_length` (1000, 2000, 4000, 8000)
+- `repetition_penalty` (1.0, 2.0, 3.1, 4.0)
+
+---
+
+### Experimento 3: Tipos de Imagens (Em desenvolvimento)
 **Objetivo:** Avaliar performance em diferentes tipos de imagens
 
 **Tipos testados:**
@@ -47,15 +57,7 @@ python experiments/exp1_model_comparison/exp1_model_comparison.py --image path/t
 - Diagramas técnicos
 - Gráficos e charts
 
----
 
-### Experimento 3: Parâmetros (Em desenvolvimento)
-**Objetivo:** Entender o impacto dos parâmetros de geração
-
-**Parâmetros testados:**
-- `temperature` (0.5, 1.0, 1.5, 2.0)
-- `max_length` (1000, 2000, 4000, 8000)
-- `repetition_penalty` (1.0, 2.0, 3.1, 4.0)
 
 ---
 

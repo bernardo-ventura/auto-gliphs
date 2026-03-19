@@ -1,6 +1,5 @@
 # Experimento 2: Análise de Parâmetros do Modelo 1B
 
-**Data:** 17 de março de 2026  
 **Modelo:** StarVector-1B (starvector/starvector-1b-im2svg)  
 **Imagem de teste:** sample-18.png (224x224)
 
@@ -33,9 +32,16 @@ Testar o modelo 1B com diferentes configurações de parâmetros para entender s
 
 ## Resultados
 
-### ✅ Todas as Configurações Funcionaram
+### 8 configurações funcionaram
 
-Todas as 10 configurações geraram SVGs válidos sem erros.
+- As configurações `fast` e `length_short` (com `max_length=2000`) geraram **SVGs incompletos**
+- O arquivo termina abruptamente sem fechar as tags `</svg>`
+- Não é possível visualizar esses SVGs no VS Code
+- `max_length=2000` é insuficiente para esta imagem
+
+As restantes configurações geraram SVGs válidos e muito semelhantes, com diferenças pouco significativas em tempo de execução (~440-452s).
+
+A conclusão é que mexer nos parâmetros com a finalidade de melhorar a eficiência não parece muito promissor, o único parâmetro que merece atenção é o max_lenght, que dependendo da complexidade da imagem, um valor baixo pode resultar em SVGs incompletos e portanto inválidos.
 
 ### 🏆 Principais Descobertas
 
@@ -58,14 +64,6 @@ Todas as 10 configurações geraram SVGs válidos sem erros.
 - Variações (1.0 a 3.1) **não afetam** número de elementos
 - Impacto mínimo no tempo de geração
 
-## ⚠️ Problema Identificado
-
-**SVGs Incompletos:**
-- As configurações `fast` e `length_short` (com `max_length=2000`) geraram **SVGs incompletos**
-- O arquivo termina abruptamente sem fechar as tags `</svg>`
-- Não é possível visualizar esses SVGs no VS Code
-- **Conclusão:** `max_length=2000` é insuficiente para esta imagem
-
 ## 💡 Recomendações
 
 ### Para Velocidade E Qualidade
@@ -81,9 +79,8 @@ Todas as 10 configurações geraram SVGs válidos sem erros.
 
 1. **Flash Attention**: Tivemos que desinstalar `flash-attn` pois a GPU não suporta (requer Ampere+)
 2. **Tempo Médio**: ~7-8 minutos por configuração para `max_length=4000`
-3. **Hardware**: GPU 4GB, tempo de geração varia conforme `max_length`
+3. **Hardware**: GPU 4GB
 4. **Consistency**: Para esta imagem, a maioria das configs convergiu para 45 elementos
-5. **⚠️ SVGs Incompletos**: Configs com `max_length=2000` (`fast` e `length_short`) geraram SVGs quebrados - não podem ser visualizados
 
 ## Arquivos Gerados
 
@@ -94,5 +91,3 @@ Todas as 10 configurações geraram SVGs válidos sem erros.
 ## Próximos Passos
 
 - Testar com diferentes tipos de imagens (ícones, logos, diagramas)
-- Comparar qualidade visual dos SVGs gerados
-- Analisar se as diferenças de temperature afetam a qualidade mesmo sem mudar o número de elementos
