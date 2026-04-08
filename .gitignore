@@ -184,3 +184,5 @@ assets/reward_assets
 output*.svg
 output*.png
 documentation.txt
+sam-documentation.txt
+PARAMETROS_COMPLETO.md

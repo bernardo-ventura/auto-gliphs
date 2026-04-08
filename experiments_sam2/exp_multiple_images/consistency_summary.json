@@ -1,0 +1,118 @@
+{
+  "images": {
+    "sample-0": {
+      "mean_objects": 4.0,
+      "std_objects": 0.0,
+      "runs": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "consistency": 1.0
+    },
+    "sample-1": {
+      "mean_objects": 16.0,
+      "std_objects": 0.0,
+      "runs": [
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "consistency": 1.0
+    },
+    "sample-15": {
+      "mean_objects": 5.0,
+      "std_objects": 0.0,
+      "runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "consistency": 1.0
+    },
+    "sample-16": {
+      "mean_objects": 4.0,
+      "std_objects": 0.0,
+      "runs": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "consistency": 1.0
+    },
+    "sample-17": {
+      "mean_objects": 3.0,
+      "std_objects": 0.0,
+      "runs": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "consistency": 1.0
+    },
+    "sample-18": {
+      "mean_objects": 6.0,
+      "std_objects": 0.0,
+      "runs": [
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "consistency": 1.0
+    },
+    "sample-4": {
+      "mean_objects": 1.0,
+      "std_objects": 0.0,
+      "runs": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "consistency": 1.0
+    },
+    "sample-6": {
+      "mean_objects": 4.0,
+      "std_objects": 0.0,
+      "runs": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "consistency": 1.0
+    },
+    "sample-7": {
+      "mean_objects": 3.0,
+      "std_objects": 0.0,
+      "runs": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "consistency": 1.0
+    }
+  },
+  "overall": {
+    "avg_objects": 5.111111111111111,
+    "std_objects": 4.067334492827362,
+    "avg_confidence": 0.9414352567935432,
+    "avg_consistency": 1.0
+  }
+}
