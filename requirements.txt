@@ -1,0 +1,127 @@
+# StarVector + SAM2 - Requirements
+# Python >= 3.11
+
+# ============================================================================
+# CORE DEPENDENCIES - StarVector
+# ============================================================================
+
+# Deep Learning
+torch==2.5.1
+torchvision==0.20.1
+transformers==4.49.0
+tokenizers==0.21.1
+sentencepiece==0.2.0
+accelerate
+
+# Data Processing
+numpy<2.0.0
+scipy==1.11.1
+scikit-learn==1.2.2
+scikit-image
+datasets
+
+# Utilities
+pydantic==2.10
+omegaconf
+tqdm
+requests
+httpx==0.24.0
+
+# ============================================================================
+# SVG PROCESSING
+# ============================================================================
+
+svgpathtools==1.6.1
+cairosvg
+beautifulsoup4
+webcolors
+lxml
+svglib
+reportlab
+
+# ============================================================================
+# WEB & API
+# ============================================================================
+
+gradio==3.36.1
+gradio_client==0.2.9
+uvicorn
+fastapi
+
+# ============================================================================
+# VISUALIZATION & PLOTTING
+# ============================================================================
+
+matplotlib
+seaborn==0.12.2
+Pillow
+
+# ============================================================================
+# ML MODELS & METRICS
+# ============================================================================
+
+# Image Quality Metrics
+lpips
+torch-fidelity
+taming-transformers
+noise
+
+# Vision Models
+open-clip-torch
+clip-openai
+sentence-transformers
+
+# ============================================================================
+# SAM2 (Segment Anything Model 2)
+# ============================================================================
+
+# Install SAM2 from GitHub
+git+https://github.com/facebookresearch/sam2.git
+
+# SAM2 Dependencies
+opencv-python-headless
+
+# ============================================================================
+# OPTIONAL - Training
+# ============================================================================
+
+# Uncomment if you need training capabilities:
+# deepspeed
+# ninja
+# wandb
+# fairscale
+
+# ============================================================================
+# OPTIONAL - Flash Attention (requires CUDA Ampere+ GPU)
+# ============================================================================
+
+# Uncomment ONLY if you have a compatible GPU (RTX 30xx, 40xx, A100, etc.)
+# flash-attn==2.7.3
+
+# ============================================================================
+# ADDITIONAL UTILITIES
+# ============================================================================
+
+markdown2[all]
+openai
+protobuf
+
+# ============================================================================
+# NOTES
+# ============================================================================
+
+# Installation:
+#   pip install -r requirements.txt
+
+# For development:
+#   pip install -e .
+
+# GPU Requirements:
+#   - CUDA-capable GPU recommended
+#   - GTX 1650 (4GB) or better
+#   - For flash-attn: Ampere+ architecture required
+
+# Known Issues:
+#   - flash-attn requires specific CUDA version and Ampere+ GPU
+#   - opencv-python-headless used to avoid GUI dependencies
+#   - numpy<2.0.0 required for compatibility with some dependencies

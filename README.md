@@ -1,6 +1,22 @@
-# StarVector - Image to SVG Vectorization
+# StarVector + SAM2 - Image to SVG Vectorization
 
-Este é um fork do projeto [StarVector](https://github.com/joanrod/star-vector) com scripts personalizados para geração de SVG.
+Este é um fork do projeto [StarVector](https://github.com/joanrod/star-vector) com integração do SAM2 (Segment Anything Model 2) para geração de SVG com anotações semânticas.
+
+## 📦 Installation / Instalação
+
+**Quick Start:**
+```bash
+pip install -r requirements.txt
+pip install -e .
+```
+
+**Detailed instructions:** See [INSTALLATION.md](INSTALLATION.md)
+
+**Available requirements files:**
+- `requirements.txt` - Full installation (recommended)
+- `requirements-minimal.txt` - Inference only (lightweight)
+
+---
 
 ## 🚀 Instalação Realizada
 

@@ -183,6 +183,36 @@ assets/reward_assets
 # Arquivos de teste/output gerados
 output*.svg
 output*.png
+test_*.svg
+test_*.png
+
+# Documentação temporária (movida para exp folders)
 documentation.txt
 sam-documentation.txt
 PARAMETROS_COMPLETO.md
+INSTALLATION.md
+
+# Resultados de experimentos (manter estrutura, ignorar outputs)
+experiments_starvector/*/results/*.svg
+experiments_starvector/*/results/*.png
+experiments_starvector/*/results/*.json
+experiments_sam2/*/results/*.png
+experiments_sam2/*/results/*.json
+experiments_sam2/*/results/*.txt
+
+# Modelos baixados (cache HuggingFace)
+models/
+checkpoints/
+*.pth
+*.bin
+*.safetensors
+
+# Dados grandes
+datasets/
+data/cache/
+*.h5
+*.hdf5
+
+# VS Code
+.vscode/
+*.code-workspace
