@@ -1,8 +1,8 @@
-name: auto-gliphs
+name: starvector
 channels:
   - defaults
 dependencies:
-  - python=3.13
+  - python=3.11
   - pip
-  - setuptools
-  - wheel
+  - pip:
+    - -r requirements.txt
