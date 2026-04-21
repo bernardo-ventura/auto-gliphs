@@ -1,126 +1,76 @@
-# StarVector + SAM2 - Image to SVG Vectorization
+# StarVector + SAM2
 
-Este é um fork do projeto [StarVector](https://github.com/joanrod/star-vector) com integração do SAM2 (Segment Anything Model 2) para geração de SVG com anotações semânticas.
+Projeto de pesquisa combinando [StarVector](https://github.com/joanrod/star-vector) (geração de SVG a partir de imagens) e [SAM2](https://github.com/facebookresearch/sam2) (segmentação semântica) para vetorização avançada de imagens.
 
-## 📦 Installation / Instalação
-
-**Quick Start:**
-```bash
-pip install -r requirements.txt
-pip install -e .
-```
-
-**Detailed instructions:** See [INSTALLATION.md](INSTALLATION.md)
-
-**Available requirements files:**
-- `requirements.txt` - Full installation (recommended)
-- `requirements-minimal.txt` - Inference only (lightweight)
+**Tecnologias:**
+- StarVector: Modelos baseados em transformers para gerar código SVG
+- SAM2: Segmentação automática de objetos em imagens
+- PyTorch 2.5.1 | Transformers 4.49.0
 
 ---
 
-## 🚀 Instalação Realizada
+## 🚀 Setup
 
-### Ambiente
-- Python 3.11.3 (via Conda)
-- Ambiente: `starvector`
-- GPU: CUDA (se disponível)
+### **Pré-requisitos**
+- Miniconda/Anaconda ([Download](https://docs.conda.io/en/latest/miniconda.html))
+- GPU NVIDIA com CUDA (opcional, recomendado)
 
-### Dependências Principais
-- PyTorch 2.5.1
-- Transformers 4.49.0
-- Bibliotecas SVG (cairosvg, svgpathtools, svglib)
-
-### Instalação
+### **Instalação**
 ```bash
-# Criar ambiente conda
-conda create -n starvector python=3.11.3 -y
+# 1. Clonar repositório
+git clone <url-do-repositorio>
+cd star-vector
+
+# 2. Criar e ativar ambiente
+conda env create -f environment.yml
 conda activate starvector
 
-# Instalar dependências do sistema (Ubuntu/Debian)
-sudo apt-get install libcairo2-dev pkg-config python3-dev
-
-# Instalar o pacote
-pip install --upgrade pip
+# 3. Instalar dependências
 pip install -e .
-```
 
-### Autenticação HuggingFace
-É necessário fazer login no HuggingFace e aceitar os termos do modelo StarCoder:
-
-```bash
+# 4. Autenticar no HuggingFace
 huggingface-cli login
 ```
 
-Depois acesse: https://huggingface.co/bigcode/starcoderbase-1b e aceite os termos.
+**HuggingFace Setup:**
+- Token: https://huggingface.co/settings/tokens (tipo: Read)
+- Aceitar termos: https://huggingface.co/bigcode/starcoderbase-1b
 
-## 📝 Scripts Personalizados
+---
 
-### Image2SVG - Gerar SVG a partir de Imagem
+## ✅ Testar Instalação
 
-Script: `test_image2svg.py`
-
+### **StarVector (Image → SVG)**
 ```bash
 python test_image2svg.py
 ```
+Gera `output.svg` a partir de uma imagem de exemplo.
 
-**O que faz:**
-- Carrega modelo `starvector-1b-im2svg`
-- Processa imagem de exemplo
-- Gera código SVG vetorizado
-- Salva resultado em `output.svg` e `output_rendered.png`
+### **SAM2 (Segmentação)**
+```bash
+python experiments_sam2/exp_multiple_images/exp_multiple_images.py
+```
+Segmenta imagens em `assets/examples/` e salva resultados.
 
-**Parâmetros principais:**
-- `max_length=4000` - Tamanho máximo do SVG gerado
-- `temperature=1.5` - Criatividade na geração
-- `length_penalty=-1` - Penalidade por comprimento
-- `repetition_penalty=3.1` - Evita repetições
+---
 
-### Exemplo de Uso
+## 📁 Estrutura do Projeto
 
-```python
-from PIL import Image
-from starvector.model.starvector_arch import StarVectorForCausalLM
-from starvector.data.util import process_and_rasterize_svg
-import torch
-
-# Carregar modelo
-model = StarVectorForCausalLM.from_pretrained("starvector/starvector-1b-im2svg", torch_dtype=torch.float32)
-model.cuda()
-model.eval()
-
-# Processar imagem
-image = Image.open('sua_imagem.png').convert('RGB')
-image_tensor = model.process_images([image])[0].to(torch.float16).cuda()
-
-# Gerar SVG
-batch = {"image": image_tensor}
-raw_svg = model.generate_im2svg(batch, max_length=4000, temperature=1.5, length_penalty=-1, repetition_penalty=3.1)[0]
-
-# Processar resultado
-svg, raster_image = process_and_rasterize_svg(raw_svg)
-
-# Salvar
-with open("output.svg", "w") as f:
-    f.write(svg)
+```
+star-vector/
+├── experiments_starvector/    # Experimentos com StarVector
+├── experiments_sam2/          # Experimentos com SAM2
+├── starvector/                # Código fonte StarVector
+├── assets/examples/           # Imagens de exemplo
+├── test_image2svg.py          # Script de teste rápido
+└── environment.yml            # Configuração do ambiente
 ```
 
-## 📊 Modelos Disponíveis
+---
 
-- ✅ `starvector/starvector-1b-im2svg` - Image → SVG (1B parâmetros)
-- ✅ `starvector/starvector-8b-im2svg` - Image → SVG (8B parâmetros, mais preciso)
-- ❌ Text2SVG - Requer treinamento/fine-tuning
+## ⚙️ Notas Técnicas
 
-## 🔧 Modificações Realizadas
-
-1. **pyproject.toml**: Comentado `flash_attn` (requer CUDA toolkit completo)
-2. **Scripts de teste**: Criados para facilitar uso dos modelos
-3. **.gitignore**: Atualizado para ignorar outputs gerados
-
-
-## 🎯 Próximos Passos
-
-- [ ] Testar modelo 8B (maior e mais preciso)
-- [ ] Testar outras imagens
-- [ ] Treinar modelo Text2SVG
-
-
+- Python 3.11 via Conda
+- Primeira execução baixa ~5GB de modelos
+- `flash_attn` desabilitado (requer CUDA toolkit completo)
+- GPU recomendada mas não obrigatória
