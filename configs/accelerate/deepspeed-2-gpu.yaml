@@ -5,6 +5,8 @@ deepspeed_config:
   offload_param_device: none
   zero3_init_flag: false
   zero_stage: 2
+  train_micro_batch_size_per_gpu: 1
+  train_batch_size: 2
 distributed_type: DEEPSPEED
 downcast_bf16: 'no'
 fsdp_config: {}

@@ -1,0 +1,17 @@
+# Training-specific dependencies for StarVector Text2SVG
+# Install these IN ADDITION to requirements.txt
+#
+# Usage:
+#   pip install -r requirements.txt
+#   pip install -r requirements-train.txt
+
+# Distributed Training with DeepSpeed
+deepspeed>=0.12.0
+ninja>=1.11.0        # Build system for compiling DeepSpeed CUDA ops
+
+# Experiment Tracking (optional but highly recommended)
+wandb>=0.16.0
+
+# Optional: Flash Attention (requires CUDA and Ampere+ GPU)
+# Uncomment ONLY if you have RTX 30xx/40xx, A100, or newer:
+# flash-attn>=2.7.0

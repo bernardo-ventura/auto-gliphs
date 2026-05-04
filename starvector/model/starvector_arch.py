@@ -157,8 +157,22 @@ class StarVectorForCausalLM(PreTrainedModel):
         # Optionally, forward this call to the internal transformer.
         if hasattr(self.model, 'svg_transformer') and hasattr(self.model.svg_transformer, 'gradient_checkpointing_enable'):
             self.model.svg_transformer.gradient_checkpointing_enable()
+    
+    def forward(self, batch=None, vision_embeds=None, input_ids=None, num_generations=None, attention_mask=None, num_logits_to_keep=None):
+        """
+        Forward pass that supports both training (batch) and inference (explicit args) modes.
+        
+        Training mode: forward(batch)
+        Inference mode: forward(vision_embeds, input_ids, num_generations, attention_mask, num_logits_to_keep)
+        """
+        # If batch is provided (training mode), delegate to the internal model
+        if batch is not None:
+            return self.model(batch)
+        
+        # Otherwise, use the explicit arguments (inference/generation mode)
+        if vision_embeds is None or input_ids is None:
+            raise ValueError("Either 'batch' or all explicit arguments must be provided")
             
-    def forward(self,  vision_embeds, input_ids, num_generations, attention_mask, num_logits_to_keep) -> Union[Tuple, CausalLMOutputWithCrossAttentions]:
         completion_embeds = self.model._get_embeddings(input_ids)
         inputs_embeds = torch.cat([vision_embeds.repeat(num_generations, 1, 1), completion_embeds], dim=1)
 

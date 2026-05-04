@@ -170,10 +170,7 @@ def main(config=None):
         wandb.log({"num_update_steps_per_epoch": num_update_steps_per_epoch})
         wandb.log({"max_train_steps": max_train_steps})
 
-    # accelerate prepare model
-    model = accelerator.prepare(model)
-    
-    # activation/gradient checkpointing
+    # activation/gradient checkpointing (before prepare for DeepSpeed)
     if config.training.use_gradient_checkpointing:
         print("apply gradient checkpointing")
         model = apply_gradient_checkpointing(model)
@@ -192,9 +189,37 @@ def main(config=None):
         num_training_steps= (len(train_dataloader) * config.training.n_epochs),
     )
     
-    optimizer, train_dataloader, test_dataloader, lr_scheduler = accelerator.prepare(
-        optimizer, train_dataloader, test_dataloader, lr_scheduler
+    # accelerate prepare: model + optimizer + dataloaders + scheduler together
+    # (required for DeepSpeed to detect batch_size)
+    model, optimizer, train_dataloader, test_dataloader, lr_scheduler = accelerator.prepare(
+        model, optimizer, train_dataloader, test_dataloader, lr_scheduler
     )
+    
+    # Verify trainable parameters after prepare
+    if accelerator.is_main_process:
+        trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+        total_params = sum(p.numel() for p in model.parameters())
+        print(f"\n🔍 After accelerator.prepare():")
+        print(f"   Trainable params: {trainable_params:,}")
+        print(f"   Total params: {total_params:,}")
+        print(f"   Trainable %: {100 * trainable_params / total_params:.2f}%\n")
+        
+        if trainable_params == 0:
+            print("⚠️  WARNING: NO TRAINABLE PARAMETERS! Re-enabling gradients...")
+            # Re-enable gradients for LLM parameters
+            if hasattr(model, 'module'):
+                model_ref = model.module  # unwrap if DDP
+            else:
+                model_ref = model
+                
+            if hasattr(model_ref, 'model') and hasattr(model_ref.model, 'svg_transformer'):
+                for param in model_ref.model.svg_transformer.parameters():
+                    param.requires_grad = True
+                print("✅ Re-enabled gradients for svg_transformer")
+                
+                # Verify again
+                trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+                print(f"   Trainable params after fix: {trainable_params:,}\n")
         
     loss_meter = AverageMeter()
 

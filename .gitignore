@@ -191,6 +191,7 @@ documentation.txt
 sam-documentation.txt
 PARAMETROS_COMPLETO.md
 INSTALLATION.md
+local
 
 # Resultados de experimentos (manter estrutura, ignorar outputs)
 experiments_starvector/*/results/*.svg
