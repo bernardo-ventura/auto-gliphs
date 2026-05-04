@@ -19,13 +19,19 @@ class StarCoderModel(nn.Module):
         model_config = AutoConfig.from_pretrained(config.starcoder_model_name, trust_remote_code=True)
         model_config.use_cache = config.use_cache
         model_config.use_bfloat16 = True
+        
+        # Usar attn_implementation passado via kwargs ou "eager" como fallback
+        attn_impl = kwargs.get('attn_implementation', 'eager')
+        
         model = AutoModelForCausalLM.from_pretrained(
             config.starcoder_model_name, 
             config=model_config, 
-            attn_implementation="flash_attention_2", 
+            attn_implementation=attn_impl, 
             torch_dtype=torch.bfloat16, 
             trust_remote_code=True)
-        model.resize_token_embeddings(len(self.tokenizer))
+        
+        # Desabilitar mean_resizing para evitar erro com meta tensors (quantização)
+        model.resize_token_embeddings(len(self.tokenizer), mean_resizing=False)
         self.transformer = model
 
         # Prompt the model after image
